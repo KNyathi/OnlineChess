@@ -1,18 +1,19 @@
 from django.db import models
-from django.contrib.auth.models import User
 
-class ChessGame(models.Model):
-    # Define the chess game model, including game state, players, etc.
-    # Add fields as needed based on your requirements.
-    pass
+class User(models.Model):
+    username = models.CharField(max_length=50, unique=True)
+    password = models.CharField(max_length=128)
+    
+    class Meta:
+        app_label = 'chess_game'
 
-class Player(models.Model):
-    # Model to represent a player in a chess game
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    # Add more fields like rating, game history, etc.
+class Game(models.Model):
+    player1 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='games_as_player1')
+    player2 = models.ForeignKey(User, on_delete=models.CASCADE, related_name='games_as_player2')
+    # Add more fields as needed
 
 class Move(models.Model):
-    # Model to store individual moves in a game
-    game = models.ForeignKey(ChessGame, on_delete=models.CASCADE)
-    player = models.ForeignKey(Player, on_delete=models.CASCADE)
-    # Add fields for move details (start, end positions, piece moved, etc.)
+    game = models.ForeignKey(Game, on_delete=models.CASCADE)
+    player = models.ForeignKey(User, on_delete=models.CASCADE)
+    move = models.CharField(max_length=10)  # Store move details, e.g., "e2-e4"
+    # Add more fields as needed
