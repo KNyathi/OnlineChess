@@ -88,10 +88,18 @@ DATABASES = {
         'NAME': 'postgres',
         'USER': 'postgres',
         'PASSWORD': 'Nyathik123',
-        'HOST': 'localhost',  # Or the host of your PostgreSQL server
-        'PORT': '5432',       # Or your PostgreSQL port
+        'HOST': 'localhost',  
+        'PORT': '5432',      
     }
 }
+
+
+
+#Set the URL to redirect to after successful login
+LOGIN_REDIRECT_URL = 'index' 
+
+#Set the URL for the login page 
+LOGIN_URL = 'login'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
