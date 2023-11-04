@@ -97,7 +97,7 @@ DATABASES = {
 
 
 #Set the URL to redirect to after successful login
-LOGIN_REDIRECT_URL = 'index' 
+LOGIN_REDIRECT_URL = 'home-view' 
 
 #Set the URL for the login page 
 LOGIN_URL = 'login'
