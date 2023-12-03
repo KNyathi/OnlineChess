@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
-from .models import Game, UserProfile, Move
+from .models import Game, User, Move
 from .serializers import GameSerializer, UserProfileSerializer, MoveSerializer
 from rest_framework import generics
 from django.contrib.auth import login, authenticate
@@ -179,5 +179,5 @@ class MoveListCreateView(generics.ListCreateAPIView):
 
 
 class UserProfileDetailView(generics.RetrieveAPIView):
-    queryset = UserProfile.objects.all()
+    queryset = User.objects.all()
     serializer_class = UserProfileSerializer

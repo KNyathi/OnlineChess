@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Game
+from .models import Game, Move, User
 
 class GameSerializer(serializers.ModelSerializer):
     class Meta:
@@ -15,5 +15,5 @@ class MoveSerializer(serializers.ModelSerializer):
 
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
-        model = UserProfile
+        model = User
         fields = '_all_'  # Serialize all fields in the UserProfile model

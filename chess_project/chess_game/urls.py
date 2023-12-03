@@ -12,5 +12,5 @@ urlpatterns = [
     path('game-lobby/', game_lobby_view, name='game-lobby-view'),
     path('game-detail/<int:game_id>/', game_detail_view, name='game-detail-view'),
     path('profile/', profile_view, name='profile-view'),
-    # Add more URL patterns for other views as needed
+ 
 ]
