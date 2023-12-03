@@ -46,7 +46,7 @@ def game_lobby_view(request):
         if create_game_form.is_valid():
             new_game = create_game_form.save()
             # Redirect the user to the game detail page for the new game
-            return redirect('game-detail', game_id=new_game.id)
+            return redirect('game-detail-view', game_id=new_game.id)
     else:
         create_game_form = CreateGameForm()
 
@@ -142,7 +142,7 @@ def login_view(request):
         if user is not None:
             login(request, user)
             # Redirect the user to the desired page after login
-            return redirect('index')
+            return redirect('game-lobby-view')
 
     return render(request, 'login.html')
 
