@@ -4,13 +4,12 @@ from .models import Game, User, Move
 from .serializers import GameSerializer, UserProfileSerializer, MoveSerializer
 from rest_framework import generics
 from django.contrib.auth import login, authenticate
-from django.views.decorators.csrf import ensure_csrf_cookie
+from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .forms import CreateGameForm, MakeMoveForm
 from django.db.models import Q
 import chess
-
 
 
 # 1) Home View
@@ -148,8 +147,31 @@ def login_view(request):
             return redirect('game-lobby-view')
 
     return render(request, 'login.html')
+    
+    
 
+"""
+@api_view(['POST'])
+def register_view(request):
+    if request.method == 'POST':
+        username = request.data.get('username')
+        email = request.data.get('email')
+        password1 = request.data.get('password1')
+        password2 = request.data.get('password2')
 
+        if password1 == password2:
+            user = User.objects.create_user(username=username, email=email, password=password1)
+            login(request, user)
+            # Redirect the user to the desired page after registration
+            return Response({'success': True, 'message': 'Registration successful'})
+        else:
+            return Response({'success': False, 'error': 'Passwords do not match.'})
+
+    return Response({'success': False, 'error': 'Invalid request'})
+
+"""
+
+@csrf_exempt
 @api_view(['POST'])
 def register_view(request):
     # Handle user registration
