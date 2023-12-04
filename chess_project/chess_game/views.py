@@ -9,6 +9,9 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .forms import CreateGameForm, MakeMoveForm
 from django.db.models import Q
+from chess import Chess
+
+
 
 # 1) Home View
 def home_view(request):
