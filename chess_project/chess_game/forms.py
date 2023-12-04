@@ -9,4 +9,4 @@ class CreateGameForm(forms.ModelForm):
 class MakeMoveForm(forms.ModelForm):
     class Meta:
         model = Move
-        fields = ['move_text']  # Adjust the field(s) based on your Move model
+        fields = ['game', 'player', 'move']  # Adjust the field(s) based on your Move model
