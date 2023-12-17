@@ -18,3 +18,7 @@ class Move(models.Model):
     player = models.ForeignKey(User, on_delete=models.CASCADE)
     move = models.CharField(max_length=10)  # Store move details, e.g., "e2-e4"
     # Add more fields as needed
+    
+    
+    
+

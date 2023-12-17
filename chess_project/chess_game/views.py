@@ -4,12 +4,16 @@ from .models import Game, User, Move
 from .serializers import GameSerializer, UserProfileSerializer, MoveSerializer
 from rest_framework import generics
 from django.contrib.auth import login, authenticate
+from django.contrib.auth.decorators import login_required 
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .forms import CreateGameForm, MakeMoveForm
 from django.db.models import Q
 import chess
+from django.contrib.auth.forms import UserCreationForm
+from django.urls import reverse_lazy
+from django.views.generic.edit import CreateView
 
 
 # 1) Home View
@@ -32,6 +36,8 @@ def home_view(request):
     }
 
     return render(request, 'index.html', context)
+
+
 
 
 # 2) Game Lobby View
@@ -70,6 +76,8 @@ def game_lobby_view(request):
     }
 
     return render(request, 'game_lobby.html', context)
+
+
 
 
 # 3) Game Detail View
@@ -114,6 +122,8 @@ def game_detail_view(request, game_id):
     return render(request, 'game_detail.html', context)
 
 
+
+
 # 4) Profile View
 def profile_view(request, user_id):
     # Retrieve the user's profile using the user_id
@@ -130,69 +140,14 @@ def profile_view(request, user_id):
     return render(request, 'profile.html', context)
 
 
-# 5) Login and Registration Views
-@ensure_csrf_cookie
-def login_view(request):
-    # Handle user login
-    # Use Django's authentication system
-
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-
-        if user is not None:
-            login(request, user)
-            # Redirect the user to the desired page after login
-            return redirect('game-lobby-view')
-
-    return render(request, 'login.html')
-    
-    
-
-"""
-@api_view(['POST'])
-def register_view(request):
-    if request.method == 'POST':
-        username = request.data.get('username')
-        email = request.data.get('email')
-        password1 = request.data.get('password1')
-        password2 = request.data.get('password2')
-
-        if password1 == password2:
-            user = User.objects.create_user(username=username, email=email, password=password1)
-            login(request, user)
-            # Redirect the user to the desired page after registration
-            return Response({'success': True, 'message': 'Registration successful'})
-        else:
-            return Response({'success': False, 'error': 'Passwords do not match.'})
-
-    return Response({'success': False, 'error': 'Invalid request'})
-
-"""
-
-@csrf_exempt
-@api_view(['POST'])
-def register_view(request):
-    # Handle user registration
-    # Use Django's authentication system
-
-    if request.method == 'POST':
-        username = request.POST['username']
-        email = request.POST['email']
-        password1 = request.POST['password1']
-        password2 = request.POST['password2']
-
-        if password1 == password2:
-            user = User.objects.create_user(username=username, email=email, password=password1)
-            login(request, user)
-            # Redirect the user to the desired page after registration
-            return redirect('login')  # Replace 'home' with your desired URL name
-
-    return render(request, 'register.html')
 
 
-# 7) API Views
+# 5) API Views
+class CustomRegistrationView(CreateView):
+    template_name = 'register.html'
+    form_class = UserCreationForm
+    success_url = reverse_lazy('login')  # Redirect to login page after successful registration
+
 class GameListCreateView(generics.ListCreateAPIView):
     queryset = Game.objects.all()
     serializer_class = GameSerializer

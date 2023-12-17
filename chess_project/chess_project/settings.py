@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'chess_game',
     'rest_framework',
+    'corsheaders'
 ]
+
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -49,6 +51,7 @@ REST_FRAMEWORK = {
     ],
 }
 
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -57,7 +60,14 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware'
 ]
+
+
+CORS_ALLOWED_ORIGINS = [
+	"http://0.0.0.0:9000",
+]
+
 
 ROOT_URLCONF = 'chess_project.urls'
 
@@ -97,10 +107,13 @@ DATABASES = {
 
 
 #Set the URL to redirect to after successful login
-LOGIN_REDIRECT_URL = 'home-view' 
+LOGIN_REDIRECT_URL = 'game-lobby-view' 
 
 #Set the URL for the login page 
 LOGIN_URL = 'login'
+
+
+REGISTRATION_VIEW = 'chess_game.views.CustomRegistrationView'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
