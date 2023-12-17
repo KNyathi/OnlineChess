@@ -123,26 +123,7 @@ def game_detail_view(request, game_id):
 
 
 
-
-# 4) Profile View
-def profile_view(request, user_id):
-    # Retrieve the user's profile using the user_id
-    user_profile = get_object_or_404(UserProfile, user_id=user_id)
-
-    # Retrieve game history for the user
-    game_history = Game.objects.filter(Q(player1=user_profile.user) | Q(player2=user_profile.user))
-
-    context = {
-        'user_profile': user_profile,
-        'game_history': game_history,
-    }
-
-    return render(request, 'profile.html', context)
-
-
-
-
-# 5) API Views
+# 4) API Views
 class CustomRegistrationView(CreateView):
     template_name = 'register.html'
     form_class = UserCreationForm
