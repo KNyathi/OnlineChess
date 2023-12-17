@@ -10,10 +10,10 @@ class GameSerializer(serializers.ModelSerializer):
 class MoveSerializer(serializers.ModelSerializer):
     class Meta:
         model = Move
-        fields = '_all_'  # Serialize all fields in the Move model
+        fields = '__all__'  # Serialize all fields in the Move model
         
 
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = '_all_'  # Serialize all fields in the UserProfile model
+        fields = '__all__'  # Serialize all fields in the UserProfile model
